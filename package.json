@@ -1,0 +1,38 @@
+{
+  "name": "resto-office",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "tsc --noEmit && prettier --check . && stylelint --aei \"**/*.{css,scss}\" && next lint",
+    "format": "prettier --write . && stylelint \"**/*.{css,scss}\" --fix",
+    "plop": "plop",
+    "prepare": "husky install"
+  },
+  "dependencies": {
+    "react": "^18",
+    "react-dom": "^18",
+    "next": "13.5.6"
+  },
+  "devDependencies": {
+    "typescript": "^5",
+    "@types/node": "^20",
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
+    "@typescript-eslint/eslint-plugin": "^6.7.5",
+    "@typescript-eslint/parser": "^6.7.5",
+    "eslint": "^8",
+    "eslint-config-next": "13.5.6",
+    "eslint-config-prettier": "^9.0.0",
+    "plop": "^4.0.0",
+    "prettier": "^3.0.3",
+    "sass": "^1.69.3",
+    "storybook": "^7.5.1",
+    "stylelint": "^15.10.3",
+    "stylelint-config-clean-order": "^5.2.0",
+    "stylelint-config-standard-scss": "^11.0.0",
+    "husky": "^8.0.0"
+  }
+}

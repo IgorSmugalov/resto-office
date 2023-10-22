@@ -1,0 +1,19 @@
+{
+  "extends": [
+    "stylelint-config-standard-scss",
+    "stylelint-config-clean-order/error"
+  ],
+  "rules": {
+    "selector-class-pattern": [
+      "^[a-z][a-zA-Z0-9_]+$",
+      { "resolveNestedSelectors": true }
+    ],
+    "custom-property-pattern": "^(--)?[a-z][a-zA-Z0-9_]+$",
+    "scss/dollar-variable-pattern": "^[a-z][a-zA-Z0-9_]+$",
+    "scss/at-mixin-pattern": "^[a-z][a-zA-Z0-9_]+$",
+    "max-nesting-depth": [
+      2,
+      { "ignore": ["blockless-at-rules", "pseudo-classes"] }
+    ]
+  }
+}

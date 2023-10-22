@@ -1,0 +1,14 @@
+import type { Meta, StoryObj } from '@storybook/react'
+import { {{properCase component}} } from './{{kebabCase component}}'
+
+const meta = {
+  component: {{properCase component}},
+  parameters: {
+    layout: 'fullscreen',
+  },
+} satisfies Meta<typeof {{properCase component}}>
+
+export default meta
+type Story = StoryObj<typeof {{properCase component}}>
+
+export const Default: Story = {}
