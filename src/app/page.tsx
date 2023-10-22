@@ -1,5 +1,9 @@
-import styles from './page.module.css'
+import { Typography } from '@mui/material'
 
 export default function Home() {
-  return <main className={styles.main}></main>
+  return (
+    <main>
+      <Typography variant={'h1'}>Hello world</Typography>
+    </main>
+  )
 }
