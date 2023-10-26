@@ -1,0 +1,20 @@
+.loginForm {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+  align-items: center;
+
+  padding: 2em 0;
+
+  &__avatar {
+    width: 70px;
+    height: 70px;
+  }
+
+  &__form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.3em;
+    width: 100%;
+  }
+}
