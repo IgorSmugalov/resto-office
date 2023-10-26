@@ -1,9 +1,6 @@
-import ThemeRegistry from '@global/theme/theme-registry'
-import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
 import { ReactNode } from 'react'
-
-const inter = Inter({ subsets: ['latin'] })
+import { ThemeRegistry } from '@global/theme'
+import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
   title: 'Resto-office',
@@ -11,10 +8,10 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang="en">
-      <ThemeRegistry options={{ key: 'mui' }}>
-        <body className={inter.className}>{children}</body>
-      </ThemeRegistry>
+    <html lang="ru">
+      <body>
+        <ThemeRegistry>{children}</ThemeRegistry>
+      </body>
     </html>
   )
 }
