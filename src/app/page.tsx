@@ -1,9 +1,9 @@
-import { Typography } from '@mui/material'
+import { LoginForm } from '@features/login-form'
 
 export default function Home() {
   return (
     <main>
-      <Typography variant={'h1'}>Hello world</Typography>
+      <LoginForm />
     </main>
   )
 }
