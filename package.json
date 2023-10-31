@@ -9,7 +9,8 @@
     "lint": "tsc --noEmit && prettier --check . && stylelint --aei \"**/*.{css,scss}\" && next lint",
     "format": "prettier --write . && stylelint \"**/*.{css,scss}\" --fix",
     "plop": "plop",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "serve": "serve out/"
   },
   "dependencies": {
     "@emotion/react": "^11.11.1",
@@ -40,6 +41,7 @@
     "plop": "^4.0.0",
     "prettier": "^3.0.3",
     "sass": "^1.69.3",
+    "serve": "^14.2.1",
     "storybook": "^7.5.1",
     "stylelint": "^15.10.3",
     "stylelint-config-clean-order": "^5.2.0",
