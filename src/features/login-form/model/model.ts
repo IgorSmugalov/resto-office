@@ -1,10 +1,10 @@
+import { AuthResponse, Credentials } from '@shared/api/auth'
+import { ExceptionResponse } from '@shared/request'
+import { validateFormFx } from '@shared/utils'
 import { attach, createDomain } from 'effector'
 import { createForm } from 'effector-forms'
 import { equals, not, some } from 'patronum'
 import { z, ZodError } from 'zod'
-import { ExceptionResponse } from '@shared/request'
-import { AuthResponse, Credentials } from '@shared/api/auth'
-import { validateFormFx } from '@shared/utils/validate-form'
 
 export const loginForm = createDomain()
 export const form = createForm<Credentials>({

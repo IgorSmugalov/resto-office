@@ -1,5 +1,11 @@
-import { attach } from 'effector'
-import { apiRequestFx, Method } from '@shared/request'
+import { attach, sample } from 'effector'
+import {
+  apiRequestFx,
+  authenticate,
+  ExceptionResponse,
+  Method,
+} from '@shared/request'
+import { createEffect } from 'effector'
 
 export interface Credentials {
   email: string
@@ -15,11 +21,27 @@ export enum AuthApiExceptionMessages {
   'UserNotActivated' = 'UserNotActivated',
 }
 
-export const signInRequestFx = attach({
-  effect: apiRequestFx,
-  mapParams: (body: Credentials) => ({
-    method: Method.post,
-    path: 'auth/sign-in/',
-    body,
-  }),
+export const signInRequestFx = createEffect<
+  Credentials,
+  AuthResponse,
+  ExceptionResponse
+>()
+
+signInRequestFx.use(
+  attach({
+    effect: apiRequestFx,
+    mapParams: (body: Credentials) => ({
+      method: Method.post,
+      path: 'auth/sign-in/',
+      body,
+    }),
+  })
+)
+
+sample({
+  clock: signInRequestFx.doneData,
+  fn: ({ accessToken }) => {
+    return accessToken
+  },
+  target: authenticate,
 })
