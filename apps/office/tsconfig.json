@@ -1,0 +1,45 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "jsx": "preserve",
+    "allowJs": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "noEmit": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "incremental": true,
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ],
+    "paths": {
+      "@global/*": ["./apps/office/src/global/*"],
+      "@app/*": ["./apps/office/src/app/*"],
+      "@widgets/*": ["./apps/office/src/widgets/*"],
+      "@features/*": ["./apps/office/src/features/*"],
+      "@entities/*": ["./apps/office/src/entities/*"],
+      "@shared/*": ["./apps/office/src/shared/*"],
+      "@/*": ["./apps/office/src/*"]
+    },
+    "types": ["jest", "node"]
+  },
+  "include": [
+    "**/*.ts",
+    "**/*.tsx",
+    "**/*.js",
+    "**/*.jsx",
+    "../../apps/office/.next/types/**/*.ts",
+    "../../dist/apps/office/.next/types/**/*.ts",
+    "next-env.d.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    "jest.config.ts",
+    "src/**/*.spec.ts",
+    "src/**/*.test.ts"
+  ]
+}

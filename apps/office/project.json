@@ -1,0 +1,91 @@
+{
+  "name": "office",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/office",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nx/next:build",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "outputPath": "dist/apps/office"
+      },
+      "configurations": {
+        "development": {
+          "outputPath": "apps/office"
+        },
+        "production": {}
+      }
+    },
+    "serve": {
+      "executor": "@nx/next:server",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "office:build",
+        "dev": true
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "office:build:development",
+          "dev": true
+        },
+        "production": {
+          "buildTarget": "office:build:production",
+          "dev": false
+        }
+      }
+    },
+    "export": {
+      "executor": "@nx/next:export",
+      "options": {
+        "buildTarget": "office:build:production"
+      }
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "apps/office/jest.config.ts",
+        "passWithNoTests": true
+      },
+      "configurations": {
+        "ci": {
+          "ci": true,
+          "codeCoverage": true
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["apps/office/**/*.{ts,tsx,js,jsx}"]
+      }
+    },
+    "stylelint": {
+      "executor": "nx-stylelint:lint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["apps/office/**/*.css", "apps/office/**/*.scss"]
+      }
+    },
+    "tsc": {
+      "executor": "@webpro/nx-tsc:tsc",
+      "options": {
+        "tsConfig": ["tsconfig.json"]
+      }
+    },
+    "check": {
+      "executor": "nx:noop",
+      "dependsOn": ["tsc", "stylelint", "lint"]
+    },
+    "format": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": ["nx lint office --fix", "nx stylelint office -fix"]
+      }
+    }
+  },
+  "tags": ["scope:office"]
+}

@@ -1,19 +1,28 @@
 {
-  "extends": [
-    "stylelint-config-standard-scss",
-    "stylelint-config-clean-order/error"
+  "ignoreFiles": ["**/*"],
+  "plugins": ["stylelint-prettier"],
+  "overrides": [
+    {
+      "files": ["**/*.css", "**/*.scss"],
+      "extends": [
+        "stylelint-config-standard-scss",
+        "stylelint-config-clean-order/error"
+      ],
+      "rules": {
+        "prettier/prettier": true,
+        "selector-class-pattern": [
+          "^[a-z][a-zA-Z0-9_]+$",
+          { "resolveNestedSelectors": true }
+        ],
+        "custom-property-pattern": "^(--)?[a-z][a-zA-Z0-9_]+$",
+        "scss/dollar-variable-pattern": "^[a-z][a-zA-Z0-9_]+$",
+        "scss/at-mixin-pattern": "^[a-z][a-zA-Z0-9_]+$",
+        "max-nesting-depth": [
+          2,
+          { "ignore": ["blockless-at-rules", "pseudo-classes"] }
+        ]
+      }
+    }
   ],
-  "rules": {
-    "selector-class-pattern": [
-      "^[a-z][a-zA-Z0-9_]+$",
-      { "resolveNestedSelectors": true }
-    ],
-    "custom-property-pattern": "^(--)?[a-z][a-zA-Z0-9_]+$",
-    "scss/dollar-variable-pattern": "^[a-z][a-zA-Z0-9_]+$",
-    "scss/at-mixin-pattern": "^[a-z][a-zA-Z0-9_]+$",
-    "max-nesting-depth": [
-      2,
-      { "ignore": ["blockless-at-rules", "pseudo-classes"] }
-    ]
-  }
+  "rules": {}
 }
