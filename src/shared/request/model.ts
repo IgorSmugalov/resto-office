@@ -2,6 +2,7 @@
 
 import { attach, createDomain } from 'effector'
 import ky, { HTTPError } from 'ky'
+import { equals, not } from 'patronum'
 
 export enum Method {
   get = 'get',
@@ -33,8 +34,9 @@ export class NonApiException {}
 export type ExceptionResponse = NonApiException | ApiException
 
 export const request = createDomain()
-const $accessToken = request.createStore<AccessToken | null>(null)
-// export const $isAuth = not(equals($accessToken, null))
+export const authenticate = request.event<AccessToken>()
+export const $accessToken = request.createStore<AccessToken | null>(null)
+export const $isAuth = not(equals($accessToken, null))
 // export const writeTokenFx = request.effect<AccessToken, void, Error>()
 // export const readTokenFx = request.effect<void, AccessToken, Error>()
 
@@ -80,3 +82,5 @@ apiAuthorizedRequestFx.use(
     },
   })
 )
+
+$accessToken.on(authenticate, (_, token) => token)

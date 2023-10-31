@@ -9,7 +9,7 @@ const withAuth = <P extends object>(Component: ComponentType<P>): FC<P> => {
     const router = useRouter()
     const [isAuth] = useUnit([$isAuth])
     useEffect(() => {
-      if (!isAuth) router.push(`login?from=${path}`)
+      if (!isAuth) router.push(path === '/' ? 'login' : `login?from=${path}`)
     }, [isAuth, path, router])
     if (!isAuth) return null
 

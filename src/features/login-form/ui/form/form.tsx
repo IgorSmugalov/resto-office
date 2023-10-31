@@ -1,6 +1,6 @@
 'use client'
 
-import { FC, memo, SyntheticEvent } from 'react'
+import { FC, memo, SyntheticEvent, useEffect } from 'react'
 import { useForm } from 'effector-forms'
 import { LoadingButton } from '@mui/lab'
 import { $formHasErrors, $formPending, form } from '../../model'
@@ -10,14 +10,27 @@ import { EmailInput, PasswordInput } from '../inputs'
 import { useUnit } from 'effector-react/effector-react.umd'
 import { Error } from '../error'
 import styles from './form.module.scss'
+import { $isAuth } from '@shared/request'
+import { useRouter } from 'next/navigation'
 
 export const Form: FC = memo(() => {
+  const router = useRouter()
   const { submit } = useForm(form)
-  const [formPending, formHasAnyError] = useUnit([$formPending, $formHasErrors])
+  const [formPending, formHasAnyError, isAuth] = useUnit([
+    $formPending,
+    $formHasErrors,
+    $isAuth,
+  ])
   const onSubmit = (e: SyntheticEvent) => {
     e.preventDefault()
     submit()
   }
+  useEffect(() => {
+    if (isAuth) {
+      router.replace('/')
+    }
+  }, [isAuth, router])
+  if (isAuth) return null
   return (
     <Container maxWidth="xs">
       <Box className={styles.loginForm}>
