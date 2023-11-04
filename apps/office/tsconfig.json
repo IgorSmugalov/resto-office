@@ -17,15 +17,32 @@
       }
     ],
     "paths": {
-      "@global/*": ["./apps/office/src/global/*"],
-      "@app/*": ["./apps/office/src/app/*"],
-      "@widgets/*": ["./apps/office/src/widgets/*"],
-      "@features/*": ["./apps/office/src/features/*"],
-      "@entities/*": ["./apps/office/src/entities/*"],
-      "@shared/*": ["./apps/office/src/shared/*"],
-      "@/*": ["./apps/office/src/*"]
+      "@global/*": [
+        "./apps/office/src/global/*"
+      ],
+      "@app/*": [
+        "./apps/office/src/app/*"
+      ],
+      "@widgets/*": [
+        "./apps/office/src/widgets/*"
+      ],
+      "@features/*": [
+        "./apps/office/src/features/*"
+      ],
+      "@entities/*": [
+        "./apps/office/src/entities/*"
+      ],
+      "@shared/*": [
+        "./apps/office/src/shared/*"
+      ],
+      "@/*": [
+        "./apps/office/src/*"
+      ]
     },
-    "types": ["jest", "node"]
+    "types": [
+      "jest",
+      "node"
+    ]
   },
   "include": [
     "**/*.ts",
@@ -34,7 +51,8 @@
     "**/*.jsx",
     "../../apps/office/.next/types/**/*.ts",
     "../../dist/apps/office/.next/types/**/*.ts",
-    "next-env.d.ts"
+    "next-env.d.ts",
+    ".next/types/**/*.ts"
   ],
   "exclude": [
     "node_modules",
