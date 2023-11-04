@@ -1,0 +1,56 @@
+version: '3.9'
+
+services:
+  office:
+    depends_on:
+      - api
+    container_name: office
+    build:
+      dockerfile: apps/office/Dockerfile
+      context: .
+    restart: unless-stopped
+    ports:
+      - 3000:4200
+    volumes:
+      - .:/app
+      - monorepo-node-modules:/app/node_modules
+
+  api:
+    depends_on:
+      - resto_db
+    container_name: api
+    build:
+      dockerfile: apps/api/Dockerfile
+      context: .
+    restart: unless-stopped
+    ports:
+      - 4201:4201
+    volumes:
+      - .:/app
+      - monorepo-node-modules:/app/node_modules
+
+  resto_db:
+    container_name: resto_db
+    image: postgres:latest
+    restart: unless-stopped
+    env_file:
+      - .env.local.development
+    volumes:
+      - resto_database:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-resto}
+      POSTGRES_USER: ${POSTGRES_USER:-resto_user}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-0000}
+    networks:
+      - resto
+    ports:
+      - 5432:5432
+
+
+volumes:
+  monorepo-node-modules:
+  resto_database:
+
+networks:
+  resto:
+    driver: bridge
