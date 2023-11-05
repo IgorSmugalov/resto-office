@@ -1,5 +1,3 @@
 module.exports = {
-  '{apps, libs}/**/*': [
-    'npx nx affected -t check'
-  ],
-};
+  '{apps, libs, tools}/**/*': ['npx nx affected -t check'],
+}

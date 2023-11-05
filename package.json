@@ -96,6 +96,6 @@
     "@nx/nx-win32-x64-msvc": "17.0.2"
   },
   "prisma": {
-    "schema": "libs/prisma/schema.prisma"
+    "schema": "tools/prisma/schema.prisma"
   }
 }
