@@ -2,12 +2,14 @@ version: '3.9'
 
 services:
   office:
+    container_name: office
     depends_on:
       - api
-    container_name: office
     build:
       dockerfile: apps/office/Dockerfile
       context: .
+    command: >
+      sh -c "npx nx run office:serve:development"
     restart: unless-stopped
     ports:
       - 3000:4200
@@ -16,36 +18,40 @@ services:
       - monorepo-node-modules:/app/node_modules
 
   api:
+    container_name: api
     depends_on:
       - resto_db
-    container_name: api
     build:
       dockerfile: apps/api/Dockerfile
       context: .
+    command: >
+      sh -c "npx prisma migrate dev
+      && npx nx run api:serve:development"
     restart: unless-stopped
     ports:
       - 4201:4201
+      - 5555:5555
     volumes:
       - .:/app
       - monorepo-node-modules:/app/node_modules
+    networks:
+      - resto
 
   resto_db:
     container_name: resto_db
     image: postgres:latest
     restart: unless-stopped
-    env_file:
-      - .env.local.development
+
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
     volumes:
       - resto_database:/var/lib/postgresql/data
-    environment:
-      POSTGRES_DB: ${POSTGRES_DB:-resto}
-      POSTGRES_USER: ${POSTGRES_USER:-resto_user}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-0000}
     networks:
       - resto
     ports:
       - 5432:5432
-
 
 volumes:
   monorepo-node-modules:

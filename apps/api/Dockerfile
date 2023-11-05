@@ -3,7 +3,7 @@ FROM node:20-alpine
 WORKDIR /app
 
 COPY package*.json .
+COPY libs/prisma ./libs/prisma
 
 RUN npm install
-
-CMD ["npx", "nx", "run", "api:serve:development"]
+RUN npx prisma generate
