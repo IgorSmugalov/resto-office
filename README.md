@@ -4,14 +4,28 @@
 docker compose up
 ```
 
-includes:
+<sub><sup>* Docker includes hot reload</sup></sub>
 
-- hot reload for apps
-- PostgreSQL
+### Stack:
+
+- **Workspace:** NX Monorepo
+- **Run:** Docke & Docker-compose
+- **Frontend**:
+  - **Framework:** NextJS
+  - **State:** Effector & Effector-forms
+  - **UI**: MaterialUI
+  - **Libs:** Zod, Ky, Patronum
+- **Backend:**
+  - **Framework:** NestJS
+  - **ORM**: Prisma
+  - **DB**: PostgreSQL
+- **Code Style:**
+  - **ESLint**
+  - **Stylelint**
+  - **Prettier**
+  - **Pre-commit hooks**
 
 ### Monorepo structure:
-
-Based on NX Monorepo
 
 ```
 |--apps
