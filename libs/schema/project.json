@@ -1,0 +1,26 @@
+{
+  "name": "libs/shared/schema",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/shared/schema",
+  "projectType": "library",
+  "targets": {
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["libs/schema/**/*.ts"]
+      }
+    },
+    "check": {
+      "executor": "nx:noop",
+      "dependsOn": ["tsc", "lint"]
+    },
+    "format": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": ["nx lint libs/schema --fix"]
+      }
+    }
+  },
+  "tags": []
+}

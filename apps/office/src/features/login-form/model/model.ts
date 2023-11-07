@@ -1,10 +1,11 @@
+import { SignInRequestSchema } from '@libs/schema'
 import { AuthResponse, Credentials } from '@shared/api/auth'
 import { ExceptionResponse } from '@shared/request'
 import { validateFormFx } from '@shared/utils'
 import { attach, createDomain } from 'effector'
 import { createForm } from 'effector-forms'
 import { equals, not, some } from 'patronum'
-import { z, ZodError } from 'zod'
+import { ZodError } from 'zod'
 
 export const loginForm = createDomain()
 export const form = createForm<Credentials>({
@@ -46,19 +47,9 @@ export const validateLoginFormFx = loginForm.createEffect<
 >(
   attach({
     effect: validateFormFx,
-    mapParams: (object: Credentials) => ({ object, schema: formSchema }),
+    mapParams: (object: Credentials) => ({
+      object,
+      schema: SignInRequestSchema,
+    }),
   })
 )
-
-enum formValidationErrors {
-  incorrectEmail = 'Неправильный Email',
-  notEmpty = `Поле не может быть пуcтым`,
-}
-
-const formSchema = z.object({
-  email: z
-    .string()
-    .min(1, formValidationErrors.notEmpty)
-    .email(formValidationErrors.incorrectEmail),
-  password: z.string().min(1, formValidationErrors.notEmpty),
-})

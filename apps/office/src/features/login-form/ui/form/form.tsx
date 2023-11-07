@@ -60,6 +60,23 @@ export const Form: FC = memo(() => {
           </LoadingButton>
         </Box>
       </Box>
+      {process.env.NODE_ENV === 'development' ? (
+        <>
+          <Typography
+            variant="body1"
+            align="center"
+            className={styles.loginForm}
+          >
+            APP RUN IN DEVELOPMENT MODE
+            <br />
+            use for signIn:
+            <br />
+            user@example.com
+            <br />
+            123456
+          </Typography>
+        </>
+      ) : null}
     </Container>
   )
 })
