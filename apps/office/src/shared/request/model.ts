@@ -1,6 +1,7 @@
 import { attach, createDomain } from 'effector'
 import ky, { HTTPError } from 'ky'
 import { equals, not } from 'patronum'
+import * as process from 'process'
 
 export enum Method {
   get = 'get',
@@ -47,8 +48,7 @@ export const apiAuthorizedRequestFx = request.effect<
   any,
   ExceptionResponse
 >()
-
-const api = ky.create({ prefixUrl: 'http://localhost:3001' })
+const api = ky.create({ prefixUrl: process.env.API_URL })
 const apiRequest = async (params: Request) => {
   const { method, path, body: json, accessToken } = params
   const headers: Record<string, string | undefined> = {}

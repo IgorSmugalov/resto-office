@@ -72,7 +72,7 @@
     "format": {
       "executor": "nx:run-commands",
       "options": {
-        "commands": ["nx lint office --fix"]
+        "commands": ["nx lint api --fix"]
       }
     }
   },

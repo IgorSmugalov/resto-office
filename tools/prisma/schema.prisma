@@ -11,9 +11,30 @@ datasource db {
 }
 
 model User {
-  id       String @id @default(uuid())
-  email    String @unique
-  password String
+  id                         String    @id @default(uuid())
+  email                      String    @unique
+  password                   String
+  roles                      Role[]    @default([employee])
+  activated                  Boolean   @default(false)
+  activationKey              String?   @unique @default(uuid())
+  activationKeyCreated       DateTime? @default(now())
+  recoveryPasswordKey        String?   @unique
+  recoveryPasswordKeyCreated DateTime?
+  //
+  // userProfileId              String?        @unique
+  // userProfile                Profile?       @relation(fields: [userProfileId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  //
+  // refreshTokens              RefreshToken[]
+  //
+  createdAt                  DateTime  @default(now())
+  updatedAt                  DateTime  @updatedAt
 
-  @@map("user")
+  @@map("users")
+}
+
+enum Role {
+  employee
+  owner
+
+  @@map("roles")
 }

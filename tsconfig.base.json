@@ -15,7 +15,8 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@main/*": ["apps/office/*"]
+      "@main/*": ["apps/office/*"],
+      "@libs/schema": ["libs/schema/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

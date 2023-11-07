@@ -8,6 +8,9 @@ const { composePlugins, withNx } = require('@nx/next')
  **/
 const nextConfig = {
   output: 'export',
+  env: {
+    API_URL: String(process.env.API_URL),
+  },
   nx: {
     // Set this to true if you would like to use SVGR
     // See: https://github.com/gregberge/svgr
