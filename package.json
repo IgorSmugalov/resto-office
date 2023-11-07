@@ -3,6 +3,8 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
+    "start:dev": "npm run prisma-migrate:dev && dotenv -e .env.local.development -- nx run-many --target=serve --configuration=development",
+    "prisma-migrate:dev": "dotenv -e .env.local.development -- npx prisma migrate dev",
     "lint": "nx affected --target=check",
     "format": "nx affected --target=format",
     "prepare": "husky install"
