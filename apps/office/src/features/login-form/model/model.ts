@@ -1,5 +1,8 @@
-import { SignInRequestSchema } from '@libs/schema'
-import { AuthResponse, Credentials } from '@shared/api/auth'
+import {
+  SignInRequest,
+  SignInRequestSchema,
+  SignInResponse,
+} from '@libs/schema'
 import { ExceptionResponse } from '@shared/request'
 import { validateFormFx } from '@shared/utils'
 import { attach, createDomain } from 'effector'
@@ -8,7 +11,7 @@ import { equals, not, some } from 'patronum'
 import { ZodError } from 'zod'
 
 export const loginForm = createDomain()
-export const form = createForm<Credentials>({
+export const form = createForm<SignInRequest>({
   domain: loginForm,
   fields: {
     email: {
@@ -35,19 +38,19 @@ export const $formHasErrors = some({
 })
 
 export const signInRequestFx = loginForm.createEffect<
-  Credentials,
-  AuthResponse,
+  SignInRequest,
+  SignInResponse,
   ExceptionResponse
 >()
 
 export const validateLoginFormFx = loginForm.createEffect<
-  Credentials,
-  Credentials,
+  SignInRequest,
+  SignInRequest,
   ZodError
 >(
   attach({
     effect: validateFormFx,
-    mapParams: (object: Credentials) => ({
+    mapParams: (object: SignInRequest) => ({
       object,
       schema: SignInRequestSchema,
     }),

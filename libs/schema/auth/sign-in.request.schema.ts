@@ -24,3 +24,5 @@ export const SignInRequestSchema = z.object({
     .min(6, CredentialsSchemaErrors.passwordTooSmall)
     .max(20, CredentialsSchemaErrors.passwordTooLarge),
 })
+
+export type SignInRequest = z.infer<typeof SignInRequestSchema>
