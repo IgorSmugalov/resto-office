@@ -7,11 +7,6 @@ import {
 } from '@shared/request'
 import { attach, createEffect, sample } from 'effector'
 
-export enum AuthApiExceptionMessages {
-  'IncorrectCredentials' = 'IncorrectCredentials',
-  'UserNotActivated' = 'UserNotActivated',
-}
-
 export const signInRequestFx = createEffect<
   SignInRequest,
   SignInResponse,
