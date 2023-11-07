@@ -1,13 +1,13 @@
 'use client'
 
+import { SignInRequest } from '@libs/schema'
 import { TextField } from '@mui/material'
-import { Credentials } from '@shared/api/auth'
 import { useUnit } from 'effector-react'
 import { FC, memo } from 'react'
 import { $formPending, form } from '../../model'
 
 const InputBase: FC<{
-  field: keyof Credentials
+  field: keyof SignInRequest
   label: string
   autoComplete: string
   type?: string

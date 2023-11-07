@@ -1,3 +1,4 @@
+import { SignInRequest, SignInResponse } from '@libs/schema'
 import {
   apiRequestFx,
   authenticate,
@@ -6,30 +7,21 @@ import {
 } from '@shared/request'
 import { attach, createEffect, sample } from 'effector'
 
-export interface Credentials {
-  email: string
-  password: string
-}
-
-export interface AuthResponse {
-  accessToken: string
-}
-
 export enum AuthApiExceptionMessages {
   'IncorrectCredentials' = 'IncorrectCredentials',
   'UserNotActivated' = 'UserNotActivated',
 }
 
 export const signInRequestFx = createEffect<
-  Credentials,
-  AuthResponse,
+  SignInRequest,
+  SignInResponse,
   ExceptionResponse
 >()
 
 signInRequestFx.use(
   attach({
     effect: apiRequestFx,
-    mapParams: (body: Credentials) => ({
+    mapParams: (body: SignInRequest) => ({
       method: Method.post,
       path: 'auth/sign-in/',
       body,

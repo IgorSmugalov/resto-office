@@ -5,3 +5,5 @@ export const SignInResponseSchema = z.object({
   accessToken: z.string(),
   user: UserResponseSchema,
 })
+
+export type SignInResponse = z.infer<typeof SignInResponseSchema>
