@@ -1,8 +1,9 @@
 'use client'
 
+import { AuthExceptions } from '@libs/schema'
 import { Alert } from '@mui/material'
-import { AuthApiExceptionMessages } from '@shared/api/auth'
 import { ApiException } from '@shared/request'
+import { isKnownException } from '@shared/utils/is-known-exception'
 import { useStore } from 'effector-react'
 import { FC, memo } from 'react'
 import { $formApiError } from '../../model'
@@ -16,14 +17,11 @@ export const Error: FC = memo(() => {
   const error = useStore($formApiError)
   if (!error) return null
 
-  if (error instanceof ApiException) {
-    if (error.message === AuthApiExceptionMessages.IncorrectCredentials)
-      return (
-        <ErrorMessage>Неправильное имя пользователя или пароль</ErrorMessage>
-      )
-
-    if (error.message === AuthApiExceptionMessages.UserNotActivated)
-      return <ErrorMessage>Пользователь не активирован</ErrorMessage>
+  if (
+    error instanceof ApiException &&
+    isKnownException(AuthExceptions, error)
+  ) {
+    return <ErrorMessage>{error.message}</ErrorMessage>
   }
 
   return <ErrorMessage>Что-то пошло не так, попробуйте позже</ErrorMessage>

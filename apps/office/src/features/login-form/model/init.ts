@@ -1,10 +1,12 @@
+import { SignInRequestSchema } from '@libs/schema'
 import * as authApi from '@shared/api/auth'
-import { formatZodError } from '@shared/utils'
-import { sample } from 'effector'
+import { formatZodError, validateFormFx } from '@shared/utils'
+import { attach, sample } from 'effector'
 import { not } from 'patronum'
 import {
   $formApiError,
   $formPending,
+  Credentials,
   disableForm,
   enableForm,
   form,
@@ -16,6 +18,17 @@ import {
 } from './index'
 
 // Init units
+
+validateLoginFormFx.use(
+  attach({
+    effect: validateFormFx,
+    mapParams: (object: Credentials) => ({
+      object,
+      schema: SignInRequestSchema,
+    }),
+  })
+)
+
 signInRequestFx.use(authApi.signInRequestFx)
 
 // General form logic:
@@ -65,5 +78,3 @@ sample({
   clock: signInRequestFx.failData,
   target: [$formApiError, enableForm],
 })
-
-// TODO: next steps

@@ -3,7 +3,10 @@ import { User } from '@prisma/client'
 import { HashService } from '../crypto'
 import { UserService } from '../user'
 import { AccessJwtService } from './access-jwt.service'
-import { IncorrectCredentialsException } from './auth.exceptions'
+import {
+  IncorrectCredentialsException,
+  UserNotActivatedException,
+} from './auth.exceptions'
 import { AuthDataDto, SignInRequestDto } from './dto'
 
 @Injectable()
@@ -27,14 +30,14 @@ export class AuthService {
     } catch {
       throw new IncorrectCredentialsException()
     }
-    // this.isCanAuth(user)
+    this.isCanAuth(user)
     const accessToken = await this.accessJwtService.signJwt(user)
     // const refreshToken = await this.refreshJwtService.signJwt(user)
     return { accessToken, user, refreshToken: 'refresh' }
   }
 
-  // private isCanAuth(user: User): boolean {
-  //   if (!user.activated) throw new UserNotActivatedException();
-  //   return true;
-  // }
+  private isCanAuth(user: User): boolean {
+    if (!user.activated) throw new UserNotActivatedException()
+    return true
+  }
 }
