@@ -5,17 +5,22 @@ Required:
 - Node 18 / 20
 - Docker
 
-1. Run docker with Postgres:
+1. Run docker with PostgreSQL:
 
 ```
 docker-compose -f docker-compose.development.yml --env-file .env.local.development up
 ```
 
-2. Run all apss:
+2. Run all apps:
 
 ```
 npm run start:dev
 ```
+
+*On command `start:dev` runs:
+
+- `prisma migrate dev`
+- `prisma seed`
 
 ### Access:
 
