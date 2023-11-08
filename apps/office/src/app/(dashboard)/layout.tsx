@@ -1,15 +1,32 @@
-import type { Metadata } from 'next'
-import { ReactNode } from 'react'
+'use client'
 
-export const metadata: Metadata = {
-  title: 'Resto-office',
-}
+import { Box, Toolbar } from '@mui/material'
+import withAuth from '@shared/hoc/with-auth'
+import { Header } from '@widgets/header'
+import { Sidebar } from '@widgets/sidebar'
+import * as React from 'react'
+import { FC, ReactNode } from 'react'
+import styles from './layout.module.scss'
 
-export default function DashboardLayout({ children }: { children: ReactNode }) {
+function DashboardLayout({ children }: { children: ReactNode }) {
   return (
-    <>
-      <div>DashboardLayout</div>
-      <div>{children}</div>
-    </>
+    <Box className={styles.dashboardLayout}>
+      <Header />
+      <Sidebar />
+      <PageContent>{children}</PageContent>
+    </Box>
   )
 }
+
+const PageContent: FC<{ children: ReactNode }> = ({ children }) => {
+  return (
+    <div className={styles.contentWrapper}>
+      <Toolbar />
+      <Box component="main" className={styles.contentWrapper__pageContent}>
+        {children}
+      </Box>
+    </div>
+  )
+}
+
+export default withAuth(DashboardLayout)

@@ -1,64 +1,50 @@
 'use client'
 
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined'
 import { LoadingButton } from '@mui/lab'
-import { Avatar, Box, Container, Typography } from '@mui/material'
-import { $isAuth } from '@shared/request'
+import { Box, Typography } from '@mui/material'
+import { useEffectOnce } from '@shared/hooks'
 import { useForm } from 'effector-forms'
 import { useUnit } from 'effector-react/effector-react.umd'
-import { useRouter } from 'next/navigation'
-import { FC, memo, SyntheticEvent, useEffect } from 'react'
-import { $formHasErrors, $formPending, form } from '../../model'
+import { FC, memo, SyntheticEvent } from 'react'
+import { $formHasErrors, $formPending, form, reset } from '../../model'
 import { Error } from '../error'
 import { EmailInput, PasswordInput } from '../inputs'
 import styles from './form.module.scss'
 
 export const Form: FC = memo(() => {
-  const router = useRouter()
   const { submit } = useForm(form)
-  const [formPending, formHasAnyError, isAuth] = useUnit([
+  const [formPending, formHasAnyError, resetForm] = useUnit([
     $formPending,
     $formHasErrors,
-    $isAuth,
+    reset,
   ])
   const onSubmit = (e: SyntheticEvent) => {
     e.preventDefault()
     submit()
   }
-  useEffect(() => {
-    if (isAuth) {
-      router.replace('/')
-    }
-  }, [isAuth, router])
-  if (isAuth) return null
+  useEffectOnce(() => {
+    return resetForm()
+  })
   return (
-    <Container maxWidth="xs">
-      <Box className={styles.loginForm}>
-        <Avatar className={styles.loginForm__avatar}>
-          <LockOutlinedIcon />
-        </Avatar>
-        <Typography component="h1" variant="h5">
-          Авторизуйтесь
-        </Typography>
-        <Box
-          component="form"
-          onSubmit={onSubmit}
-          noValidate
-          className={styles.loginForm__form}
+    <>
+      <Box
+        component="form"
+        onSubmit={onSubmit}
+        noValidate
+        className={styles.loginForm}
+      >
+        <EmailInput />
+        <PasswordInput />
+        <Error />
+        <LoadingButton
+          type="submit"
+          fullWidth
+          variant="contained"
+          loading={formPending}
+          disabled={formHasAnyError}
         >
-          <EmailInput />
-          <PasswordInput />
-          <Error />
-          <LoadingButton
-            type="submit"
-            fullWidth
-            variant="contained"
-            loading={formPending}
-            disabled={formHasAnyError}
-          >
-            Войти
-          </LoadingButton>
-        </Box>
+          Войти
+        </LoadingButton>
       </Box>
       {process.env.NODE_ENV === 'development' ? (
         <>
@@ -77,7 +63,7 @@ export const Form: FC = memo(() => {
           </Typography>
         </>
       ) : null}
-    </Container>
+    </>
   )
 })
 Form.displayName = 'Form'

@@ -24,9 +24,11 @@ const InputBase: FC<{
       value={value}
       disabled={formPending}
       type={type}
-      autoFocus
       required
       fullWidth
+      InputLabelProps={{
+        shrink: true,
+      }}
     />
   )
 })

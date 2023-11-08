@@ -1,0 +1,12 @@
+.dashboardLayout {
+  display: flex;
+}
+
+.contentWrapper {
+  display: block;
+  flex-grow: 1;
+
+  &__pageContent {
+    margin: 1em;
+  }
+}

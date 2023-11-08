@@ -19,7 +19,6 @@ export const form = createForm<Credentials>({
     },
   },
 })
-export const init = loginForm.createEvent<void>()
 export const reset = loginForm.createEvent<void>()
 export const enableForm = loginForm.createEvent<void>()
 export const disableForm = loginForm.createEvent<void>()

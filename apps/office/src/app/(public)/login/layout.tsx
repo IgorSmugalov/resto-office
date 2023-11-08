@@ -1,15 +1,13 @@
-import type { Metadata } from 'next'
-import { ReactNode } from 'react'
+'use client'
 
-export const metadata: Metadata = {
-  title: 'Resto-office',
-}
+import { Box } from '@mui/material'
+import { ReactNode } from 'react'
+import styles from './layout.module.scss'
 
 export default function PublicLayout({ children }: { children: ReactNode }) {
   return (
-    <>
-      <div>PublicLayout</div>
-      <div>{children}</div>
-    </>
+    <Box component="main" className={styles.publicLayout}>
+      {children}
+    </Box>
   )
 }
