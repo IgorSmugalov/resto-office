@@ -1,18 +1,13 @@
 'use client'
 
-import { Typography } from '@mui/material'
-import { $accessToken } from '@shared/request'
-import { useStore } from 'effector-react'
+import { Paper, Typography } from '@mui/material'
 
 function Home() {
-  const token = useStore($accessToken)
-
   return (
-    <main>
-      <Typography variant="h5">Hello, your token: {token}</Typography>
-    </main>
+    <Paper elevation={5}>
+      <Typography variant="h5">Hello, user</Typography>
+    </Paper>
   )
 }
 
-// export default withAuth(Home)
 export default Home

@@ -1,21 +1,8 @@
 .loginForm {
   display: flex;
   flex-direction: column;
-  gap: 1em;
-  align-items: center;
+  gap: 1.3em;
+  align-items: stretch;
 
-  padding: 2em 0;
-
-  &__avatar {
-    width: 70px;
-    height: 70px;
-    background-color: #1976d2;
-  }
-
-  &__form {
-    display: flex;
-    flex-direction: column;
-    gap: 1.3em;
-    width: 100%;
-  }
+  width: 100%;
 }

@@ -10,7 +10,6 @@ import {
   disableForm,
   enableForm,
   form,
-  init,
   loginForm,
   reset,
   signInRequestFx,
@@ -33,7 +32,7 @@ signInRequestFx.use(authApi.signInRequestFx)
 
 // General form logic:
 // Reset all data in domain on init or reset events
-loginForm.onCreateStore((store) => store.reset([init, reset]))
+loginForm.onCreateStore((store) => store.reset([reset]))
 
 //  Reset api error on any form values change
 $formApiError.on(form.$values, () => null)
@@ -68,10 +67,10 @@ sample({
 
 //  3. Login
 //  //  3.1 Request success -> reset form domain
-sample({
-  clock: signInRequestFx.doneData,
-  target: reset,
-})
+// sample({
+//   clock: signInRequestFx.doneData,
+//   target: reset,
+// })
 
 //  //  3.2 Request fail -> set server errors
 sample({

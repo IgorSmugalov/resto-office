@@ -26,8 +26,6 @@ signInRequestFx.use(
 
 sample({
   clock: signInRequestFx.doneData,
-  fn: ({ accessToken }) => {
-    return accessToken
-  },
+  fn: ({ accessToken }) => accessToken,
   target: authenticate,
 })
