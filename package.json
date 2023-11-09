@@ -28,6 +28,7 @@
     "argon2": "^0.31.2",
     "axios": "^1.0.0",
     "class-transformer": "^0.5.1",
+    "cookie-parser": "^1.4.6",
     "effector": "^22.8.7",
     "effector-forms": "^1.3.4",
     "effector-react": "^22.5.4",
@@ -42,6 +43,7 @@
     "reflect-metadata": "^0.1.13",
     "rxjs": "^7.8.0",
     "tslib": "^2.3.0",
+    "uuid": "^9.0.1",
     "zod": "^3.22.4"
   },
   "devDependencies": {
@@ -59,10 +61,12 @@
     "@swc-node/register": "~1.6.7",
     "@swc/core": "~1.3.85",
     "@testing-library/react": "14.0.0",
+    "@types/cookie-parser": "^1.4.6",
     "@types/jest": "^29.4.0",
     "@types/node": "20.8.10",
     "@types/react": "18.2.33",
     "@types/react-dom": "18.2.14",
+    "@types/uuid": "^9.0.7",
     "@typescript-eslint/eslint-plugin": "^5.60.1",
     "@typescript-eslint/parser": "^5.60.1",
     "@webpro/nx-tsc": "^0.0.1",
