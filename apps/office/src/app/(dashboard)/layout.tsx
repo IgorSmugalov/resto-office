@@ -1,7 +1,7 @@
 'use client'
 
 import { Box, Toolbar } from '@mui/material'
-import withAuth from '@shared/hoc/with-auth'
+import privatePage from '@shared/hoc/private-page'
 import { Header } from '@widgets/header'
 import { Sidebar } from '@widgets/sidebar'
 import * as React from 'react'
@@ -29,4 +29,4 @@ const PageContent: FC<{ children: ReactNode }> = ({ children }) => {
   )
 }
 
-export default withAuth(DashboardLayout)
+export default privatePage(DashboardLayout)

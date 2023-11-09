@@ -3,7 +3,7 @@ import { useUnit } from 'effector-react/effector-react.umd'
 import { usePathname, useRouter } from 'next/navigation'
 import { ComponentType, FC, useEffect } from 'react'
 
-const withAuth = <P extends object>(Component: ComponentType<P>): FC<P> => {
+const privatePage = <P extends object>(Component: ComponentType<P>): FC<P> => {
   const Protected: FC<P> = (props) => {
     const path = usePathname()
     const router = useRouter()
@@ -18,4 +18,4 @@ const withAuth = <P extends object>(Component: ComponentType<P>): FC<P> => {
   return Protected
 }
 
-export default withAuth
+export default privatePage
