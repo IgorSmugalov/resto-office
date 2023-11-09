@@ -1,3 +1,5 @@
 export * from './sign-in.response.dto'
 export * from './sign-in.request.dto'
 export * from './auth-data.dto'
+export * from './refresh-jwt-claims.dto'
+export * from './access-jwt-claims.dto'

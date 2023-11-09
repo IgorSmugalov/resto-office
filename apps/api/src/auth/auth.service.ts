@@ -8,11 +8,13 @@ import {
   UserNotActivatedException,
 } from './auth.exceptions'
 import { AuthDataDto, SignInRequestDto } from './dto'
+import { RefreshJwtService } from './refresh-jwt.service'
 
 @Injectable()
 export class AuthService {
   constructor(
     private readonly accessJwtService: AccessJwtService,
+    private readonly refreshJwtService: RefreshJwtService,
     private readonly userService: UserService,
     private readonly hashService: HashService
   ) {}
@@ -30,10 +32,11 @@ export class AuthService {
     } catch {
       throw new IncorrectCredentialsException()
     }
+
     this.isCanAuth(user)
     const accessToken = await this.accessJwtService.signJwt(user)
-    // const refreshToken = await this.refreshJwtService.signJwt(user)
-    return { accessToken, user, refreshToken: 'refresh' }
+    const refreshToken = await this.refreshJwtService.signJwt(user)
+    return { accessToken, refreshToken, user }
   }
 
   private isCanAuth(user: User): boolean {
