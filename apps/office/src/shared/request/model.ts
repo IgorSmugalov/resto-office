@@ -34,7 +34,7 @@ export type ExceptionResponse = NonApiException | ApiException
 
 export const request = createDomain()
 export const authenticate = request.event<AccessToken>()
-export const reset = request.event<void>()
+export const resetAuth = request.event<void>()
 export const $accessToken = request.createStore<AccessToken | null>(null)
 export const $isAuth = not(equals($accessToken, null))
 // export const writeTokenFx = request.effect<AccessToken, void, Error>()
@@ -82,5 +82,5 @@ apiAuthorizedRequestFx.use(
   })
 )
 
-request.onCreateStore((store) => store.reset([reset]))
+request.onCreateStore((store) => store.reset([resetAuth]))
 $accessToken.on(authenticate, (_, token) => token)

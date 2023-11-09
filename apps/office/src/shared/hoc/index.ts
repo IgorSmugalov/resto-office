@@ -1,1 +1,1 @@
-export * from './with-auth'
+export * from './private-page'
