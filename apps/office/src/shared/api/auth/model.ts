@@ -1,11 +1,6 @@
 import { SignInRequest, SignInResponse } from '@libs/schema'
-import {
-  apiRequestFx,
-  ExceptionResponse,
-  Method,
-  setAuth,
-} from '@shared/request'
-import { attach, createDomain, sample } from 'effector'
+import { ExceptionResponse } from '@shared/request'
+import { createDomain } from 'effector'
 
 const model = createDomain()
 
@@ -21,29 +16,8 @@ export const refreshRequestFx = model.createEffect<
   ExceptionResponse
 >()
 
-signInRequestFx.use(
-  attach({
-    effect: apiRequestFx,
-    mapParams: (body: SignInRequest) => ({
-      method: Method.post,
-      path: 'auth/sign-in/',
-      body,
-    }),
-  })
-)
-
-refreshRequestFx.use(
-  attach({
-    effect: apiRequestFx,
-    mapParams: () => ({
-      method: Method.post,
-      path: 'auth/refresh',
-    }),
-  })
-)
-
-sample({
-  clock: [signInRequestFx.doneData, refreshRequestFx.doneData],
-  fn: ({ accessToken }) => accessToken,
-  target: setAuth,
-})
+export const signOutRequestFx = model.createEffect<
+  void,
+  void,
+  ExceptionResponse
+>()
