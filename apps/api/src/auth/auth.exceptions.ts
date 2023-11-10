@@ -1,6 +1,12 @@
 import { AuthExceptions } from '@libs/schema'
 import { ForbiddenException, UnauthorizedException } from '@nestjs/common'
 
+export class UserNotAuthenticatedException extends UnauthorizedException {
+  constructor() {
+    super(AuthExceptions.notAuthenticated)
+  }
+}
+
 export class IncorrectCredentialsException extends UnauthorizedException {
   constructor() {
     super(AuthExceptions.incorrectCredentials)
@@ -9,16 +15,16 @@ export class IncorrectCredentialsException extends UnauthorizedException {
 
 export class UserNotActivatedException extends ForbiddenException {
   constructor() {
-    super(AuthExceptions.UserNotActivated)
+    super(AuthExceptions.userNotActivated)
   }
 }
 
-//
-// export class IncorrectRefreshTokenException extends UnauthorizedException {
-//   constructor() {
-//     super(AuthExceptions.incorrectRefreshTokenException)
-//   }
-// }
+export class IncorrectRefreshTokenException extends UnauthorizedException {
+  constructor() {
+    super(AuthExceptions.incorrectRefreshTokenException)
+  }
+}
+
 //
 // export class UserBlockedException extends UnauthorizedException {
 //   constructor() {
@@ -26,11 +32,6 @@ export class UserNotActivatedException extends ForbiddenException {
 //   }
 // }
 //
-// export class UserUnauthorizedException extends UnauthorizedException {
-//   constructor() {
-//     super(AuthExceptions.unauthorizedDefaultMessage)
-//   }
-// }
 //
 // export class UserAlreadyAuthorizedException extends ForbiddenException {
 //   constructor() {

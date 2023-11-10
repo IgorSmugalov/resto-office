@@ -51,7 +51,10 @@ export class RefreshJwtService {
         token,
         this.publicJwk
       )
-      return RefreshJwtClaimsSchema.parse(payload)
+      const validatedPayload = RefreshJwtClaimsSchema.parse(payload)
+      const isWhitelisted = await this.isWhitelisted(validatedPayload.jti)
+
+      return isWhitelisted ? validatedPayload : null
     } catch {
       return null
     }
@@ -69,11 +72,11 @@ export class RefreshJwtService {
   }
 
   public async removeFromWhitelist(
-    claims: RefreshJwtClaims
+    jti: RefreshJwtClaims['jti']
   ): Promise<RefreshToken | null> {
     try {
       return await this.prisma.refreshToken.delete({
-        where: { id: claims.jti },
+        where: { id: jti },
       })
     } catch {
       return null
@@ -95,9 +98,9 @@ export class RefreshJwtService {
     })
   }
 
-  public async isWhitelisted(claims: RefreshJwtClaims): Promise<boolean> {
+  public async isWhitelisted(jti: RefreshJwtClaims['jti']): Promise<boolean> {
     const token = await this.prisma.refreshToken.findUnique({
-      where: { id: claims.jti },
+      where: { id: jti },
     })
     return Boolean(token)
   }

@@ -1,9 +1,18 @@
-import { Body, Controller, Post, Res, UsePipes } from '@nestjs/common'
+import {
+  Body,
+  Controller,
+  Post,
+  Res,
+  UseGuards,
+  UsePipes,
+} from '@nestjs/common'
 import { Response } from 'express'
 import { ZodSerializerDto, ZodValidationPipe } from 'nestjs-zod'
 import { AuthCookieService } from './auth-cookie.service'
 import { AuthService } from './auth.service'
-import { SignInRequestDto, SignInResponseDto } from './dto'
+import { RefreshedUser } from './decorators/refreshed-user.decorator'
+import { RefreshJwtClaimsDto, SignInRequestDto, SignInResponseDto } from './dto'
+import { RefreshAuthGuard } from './guards'
 
 @Controller('auth')
 export class AuthController {
@@ -24,13 +33,28 @@ export class AuthController {
     return authData
   }
 
-  //
-  // @Post('refresh')
-  // // @UsePipes(ZodValidationPipe)
-  // async refresh(
-  //   @RefreshedUser() user: RefreshJwtClaimsDto
-  // ): Promise<RefreshJwtClaimsDto> {
-  //   console.log(user)
-  //   return user || 'no'
-  // }
+  @Post('refresh')
+  @UseGuards(RefreshAuthGuard)
+  @ZodSerializerDto(SignInResponseDto)
+  async refresh(
+    @RefreshedUser() user: RefreshJwtClaimsDto,
+    @Res({ passthrough: true }) response: Response
+  ): Promise<SignInResponseDto> {
+    const authData = await this.authService.refreshAuth(user)
+    this.authCookieService.setAuthCookie(response, authData.refreshToken)
+    return authData
+  }
+
+  @Post('sign-out')
+  @UseGuards(RefreshAuthGuard)
+  @ZodSerializerDto(SignInResponseDto)
+  async signOut(
+    @RefreshedUser() user: RefreshJwtClaimsDto,
+    @Res({ passthrough: true }) response: Response
+  ): Promise<SignInResponseDto> {
+    console.log(user)
+    const authData = await this.authService.refreshAuth(user)
+    this.authCookieService.clearAuthCookie(response)
+    return authData
+  }
 }
