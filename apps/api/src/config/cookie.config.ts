@@ -9,7 +9,7 @@ export interface ICookieConfig {
 
 const options: CookieOptions = {
   httpOnly: true,
-  path: '/' + process.env.API_PREFIX + '/auth/refresh',
+  path: '/' + process.env.API_PREFIX + '/auth',
 }
 
 export const cookieConfig = registerAs<ICookieConfig>(COOKIE_CONFIG, () => ({
