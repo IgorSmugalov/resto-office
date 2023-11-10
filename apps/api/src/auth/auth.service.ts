@@ -5,9 +5,10 @@ import { UserService } from '../user'
 import { AccessJwtService } from './access-jwt.service'
 import {
   IncorrectCredentialsException,
+  IncorrectRefreshTokenException,
   UserNotActivatedException,
 } from './auth.exceptions'
-import { AuthDataDto, SignInRequestDto } from './dto'
+import { AuthDataDto, RefreshJwtClaimsDto, SignInRequestDto } from './dto'
 import { RefreshJwtService } from './refresh-jwt.service'
 
 @Injectable()
@@ -24,6 +25,7 @@ export class AuthService {
   ): Promise<AuthDataDto> {
     const { email, password } = userCredentials
     let user: User
+
     try {
       user = await this.userService.getUnique({ email })
       await this.hashService.validatePassword(user.password, password, {
@@ -33,6 +35,23 @@ export class AuthService {
       throw new IncorrectCredentialsException()
     }
 
+    this.isCanAuth(user)
+    const accessToken = await this.accessJwtService.signJwt(user)
+    const refreshToken = await this.refreshJwtService.signJwt(user)
+    return { accessToken, refreshToken, user }
+  }
+
+  public async refreshAuth(claims: RefreshJwtClaimsDto): Promise<AuthDataDto> {
+    const { id, jti } = claims
+    let user: User
+
+    try {
+      user = await this.userService.getUnique({ id })
+    } catch {
+      throw new IncorrectRefreshTokenException()
+    }
+
+    await this.refreshJwtService.removeFromWhitelist(jti)
     this.isCanAuth(user)
     const accessToken = await this.accessJwtService.signJwt(user)
     const refreshToken = await this.refreshJwtService.signJwt(user)

@@ -1,10 +1,10 @@
 export enum AuthExceptions {
+  notAuthenticated = 'Пользователь не аутентифицирован',
+  userNotActivated = 'Пользователь не активирован',
   incorrectCredentials = 'Неверный логин или пароль',
-  UserNotActivated = 'Пользователь не активирован',
+  incorrectRefreshTokenException = 'Токен обновления не действителен',
 
-  // unauthorizedDefaultMessage = 'Пользователь не авторизован',
   // forbiddenDefaultMessage = 'Доступ запрещён',
-  // incorrectRefreshTokenException = 'Токен обновления не валиден',
   // userUnactivatedOrBlocked = 'Пользователь не активирован или заблокирован',
   // userAlreadyAuthorized = 'Пользователь уже авторизован',
   // userNotActivated = 'Пользователь не активирован',
