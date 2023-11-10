@@ -1,18 +1,19 @@
-import { EffectorRegistry } from '@global/effector/effector-registry'
-import { ThemeRegistry } from '@global/theme'
-import type { Metadata } from 'next'
+'use client'
 
-export const metadata: Metadata = {
-  title: 'Resto-office',
-}
+import { initApp } from '@entities/app'
+import { ThemeRegistry } from '@global/theme'
+import { useEffectOnce } from '@shared/hooks'
+import { useUnit } from 'effector-react'
+import './init'
 
 export default function RootLayout({ children }: { children: boolean }) {
+  const [initAppEv] = useUnit([initApp])
+  useEffectOnce(() => initAppEv)
+
   return (
     <html lang="ru">
       <body>
-        <ThemeRegistry>
-          <EffectorRegistry>{children}</EffectorRegistry>
-        </ThemeRegistry>
+        <ThemeRegistry>{children}</ThemeRegistry>
       </body>
     </html>
   )

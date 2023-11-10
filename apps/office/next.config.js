@@ -11,6 +11,7 @@ const nextConfig = {
   env: {
     API_URL: String(process.env.API_URL),
   },
+  // reactStrictMode: false,
   nx: {
     // Set this to true if you would like to use SVGR
     // See: https://github.com/gregberge/svgr
