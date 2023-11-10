@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Post,
   Res,
   UseGuards,
@@ -45,16 +46,13 @@ export class AuthController {
     return authData
   }
 
-  @Post('sign-out')
+  @Delete('sign-out')
   @UseGuards(RefreshAuthGuard)
-  @ZodSerializerDto(SignInResponseDto)
   async signOut(
     @RefreshedUser() user: RefreshJwtClaimsDto,
     @Res({ passthrough: true }) response: Response
-  ): Promise<SignInResponseDto> {
-    console.log(user)
-    const authData = await this.authService.refreshAuth(user)
+  ): Promise<void> {
     this.authCookieService.clearAuthCookie(response)
-    return authData
+    return await this.authService.signOut(user)
   }
 }

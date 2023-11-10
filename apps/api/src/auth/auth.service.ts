@@ -25,7 +25,6 @@ export class AuthService {
   ): Promise<AuthDataDto> {
     const { email, password } = userCredentials
     let user: User
-
     try {
       user = await this.userService.getUnique({ email })
       await this.hashService.validatePassword(user.password, password, {
@@ -44,7 +43,6 @@ export class AuthService {
   public async refreshAuth(claims: RefreshJwtClaimsDto): Promise<AuthDataDto> {
     const { id, jti } = claims
     let user: User
-
     try {
       user = await this.userService.getUnique({ id })
     } catch {
@@ -56,6 +54,11 @@ export class AuthService {
     const accessToken = await this.accessJwtService.signJwt(user)
     const refreshToken = await this.refreshJwtService.signJwt(user)
     return { accessToken, refreshToken, user }
+  }
+
+  public async signOut(claims: RefreshJwtClaimsDto): Promise<void> {
+    await this.refreshJwtService.removeFromWhitelist(claims.jti)
+    return
   }
 
   private isCanAuth(user: User): boolean {
