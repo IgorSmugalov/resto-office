@@ -6,7 +6,7 @@ import { sample } from 'effector'
 authUser.onCreateStore((store) => store.reset([resetAuth]))
 
 sample({
-  clock: authApi.signInRequestFx.doneData,
+  clock: [authApi.signInRequestFx.doneData, authApi.refreshRequestFx.doneData],
   fn: (response) => response.user,
   target: $authUser,
 })

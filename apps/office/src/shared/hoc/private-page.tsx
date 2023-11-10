@@ -1,21 +1,25 @@
+import { $appReady } from '@entities/app/model/model'
 import { $isAuth } from '@shared/request'
 import { useUnit } from 'effector-react/effector-react.umd'
 import { usePathname, useRouter } from 'next/navigation'
 import { ComponentType, FC, useEffect } from 'react'
 
 const privatePage = <P extends object>(Component: ComponentType<P>): FC<P> => {
-  const Protected: FC<P> = (props) => {
+  const Private: FC<P> = (props) => {
     const path = usePathname()
     const router = useRouter()
-    const [isAuth] = useUnit([$isAuth])
+    const [appReady, isAuth] = useUnit([$appReady, $isAuth])
+
     useEffect(() => {
-      if (!isAuth) router.push(path === '/' ? 'login' : `login?from=${path}`)
-    }, [isAuth, path, router])
-    if (!isAuth) return null
+      if (!isAuth && appReady)
+        router.push(path === '/' ? 'login' : `login?from=${path}`)
+    }, [isAuth, appReady, path, router])
+
+    if (!isAuth || !appReady) return null
 
     return <Component {...props} />
   }
-  return Protected
+  return Private
 }
 
 export default privatePage

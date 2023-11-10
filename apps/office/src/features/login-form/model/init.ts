@@ -67,10 +67,10 @@ sample({
 
 //  3. Login
 //  //  3.1 Request success -> reset form domain
-// sample({
-//   clock: signInRequestFx.doneData,
-//   target: reset,
-// })
+sample({
+  clock: signInRequestFx.doneData,
+  target: reset,
+})
 
 //  //  3.2 Request fail -> set server errors
 sample({
