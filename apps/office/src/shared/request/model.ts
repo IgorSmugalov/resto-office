@@ -49,7 +49,10 @@ export const apiAuthorizedRequestFx = request.effect<
   any,
   ExceptionResponse
 >()
-const api = ky.create({ prefixUrl: process.env.API_URL })
+const api = ky.create({
+  prefixUrl: process.env.API_URL,
+  credentials: 'include',
+})
 const apiRequest = async (params: Request) => {
   const { method, path, body: json, accessToken } = params
   const headers: Record<string, string | undefined> = {}
