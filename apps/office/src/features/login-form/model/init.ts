@@ -28,7 +28,11 @@ validateLoginFormFx.use(
   })
 )
 
-signInRequestFx.use(authApi.signInRequestFx)
+signInRequestFx.use(
+  attach({
+    effect: authApi.signInRequestFx,
+  })
+)
 
 // General form logic:
 // Reset all data in domain on init or reset events

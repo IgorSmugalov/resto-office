@@ -43,6 +43,7 @@ export class AuthController {
   ): Promise<SignInResponseDto> {
     const authData = await this.authService.refreshAuth(user)
     this.authCookieService.setAuthCookie(response, authData.refreshToken)
+    // await new Promise((res) => setTimeout(res, 3000))
     return authData
   }
 

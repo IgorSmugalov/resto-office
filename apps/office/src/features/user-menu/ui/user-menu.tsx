@@ -1,8 +1,8 @@
 import { Menu, MenuItem, MenuProps } from '@mui/material'
-import { resetAuth } from '@shared/request'
 import { NextLink } from '@shared/ui'
 import { useUnit } from 'effector-react'
 import { FC } from 'react'
+import { signOut } from '../model'
 
 interface UserMenuProps {
   anchorEl: MenuProps['anchorEl']
@@ -11,7 +11,7 @@ interface UserMenuProps {
 
 export const UserMenu: FC<UserMenuProps> = (props) => {
   const { handleClose, anchorEl } = props
-  const logOut = useUnit(resetAuth)
+  const signOutEv = useUnit(signOut)
   return (
     <Menu
       id="menu-appbar"
@@ -35,7 +35,7 @@ export const UserMenu: FC<UserMenuProps> = (props) => {
       <MenuItem
         onClick={() => {
           handleClose()
-          logOut()
+          signOutEv()
         }}
       >
         Выйти
