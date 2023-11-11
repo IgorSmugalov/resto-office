@@ -1,6 +1,6 @@
 import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common'
 import { Request } from 'express'
-import { UserNotAuthenticatedException } from '../auth.exceptions'
+import { UserNotAuthenticatedException } from './auth.exceptions'
 
 @Injectable()
 export class RefreshAuthGuard implements CanActivate {

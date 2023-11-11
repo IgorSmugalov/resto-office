@@ -1,12 +1,14 @@
 import {
   BadRequestException,
   InternalServerErrorException,
+  UnauthorizedException,
 } from '@nestjs/common'
 
 export enum UserExceptionMessages {
   userUnknownError = 'Неизвестная ошибка',
-  userAlreadyExistst = 'Пользователь уже существует',
-  userDoesNotExistst = 'Пользователь не существует',
+  userAlreadyExists = 'Пользователь уже существует',
+  userDoesNotExists = 'Пользователь не существует',
+  passwordIsIncorrect = 'Неправильный пароль',
   emailAlreadyInUse = 'Email уже используется',
   activationKeyNotValid = 'Ключ активации не валиден',
   userAlreadyActivated = 'Пользователь уже активирован',
@@ -22,7 +24,13 @@ export class UserUnknownErrorException extends InternalServerErrorException {
 
 export class UserAlreadyExistsException extends BadRequestException {
   constructor() {
-    super(UserExceptionMessages.userAlreadyExistst)
+    super(UserExceptionMessages.userAlreadyExists)
+  }
+}
+
+export class UserPasswordIsIncorrect extends UnauthorizedException {
+  constructor() {
+    super(UserExceptionMessages.passwordIsIncorrect)
   }
 }
 
@@ -34,7 +42,7 @@ export class EmailAlreadyInUseException extends BadRequestException {
 
 export class UserDoesNotExistsException extends BadRequestException {
   constructor() {
-    super(UserExceptionMessages.userDoesNotExistst)
+    super(UserExceptionMessages.userDoesNotExists)
   }
 }
 

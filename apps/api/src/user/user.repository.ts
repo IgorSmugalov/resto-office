@@ -14,30 +14,36 @@ export class UserRepository {
    * Return one User or throw User Does Not Exists Exception
    * @param {GetUniqueUserInput} where - Accept only one unique search key!
    **/
-  public async getUnique(
-    where: Prisma.UserWhereUniqueInput
-  ): Promise<User | never> {
-    let user: User | null = null
+  public async getUnique(where: Prisma.UserWhereUniqueInput): Promise<User> {
     try {
-      user = await this.prisma.user.findUnique({ where })
+      return await this.prisma.user.findUniqueOrThrow({ where })
     } catch (error) {
-      this.parsePrismaError(error)
+      throw new (this.parsePrismaError(error))()
     }
-    if (user) return user
-    throw new UserDoesNotExistsException()
+  }
+
+  public async updateUnique(
+    where: Prisma.UserWhereUniqueInput,
+    data: Prisma.UserUpdateInput
+  ): Promise<User> {
+    try {
+      return await this.prisma.user.update({ where, data })
+    } catch (error) {
+      throw new (this.parsePrismaError(error))()
+    }
   }
 
   private parsePrismaError(error: unknown) {
     if (error instanceof Prisma.PrismaClientKnownRequestError) {
       switch (error.code) {
         case 'P2002':
-          throw new UserAlreadyExistsException()
+          return UserAlreadyExistsException
         case 'P2025':
-          throw new UserDoesNotExistsException()
+          return UserDoesNotExistsException
         default:
-          throw new InternalServerErrorException(error.code)
+          return InternalServerErrorException
       }
     }
-    throw new InternalServerErrorException()
+    return InternalServerErrorException
   }
 }

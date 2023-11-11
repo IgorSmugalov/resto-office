@@ -1,3 +1,3 @@
 export * from './auth.module'
-export * from './decorators'
+export * from '../shared/decorators/auth'
 export * from './middlewares'

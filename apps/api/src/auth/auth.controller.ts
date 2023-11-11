@@ -1,19 +1,10 @@
-import {
-  Body,
-  Controller,
-  Delete,
-  Post,
-  Res,
-  UseGuards,
-  UsePipes,
-} from '@nestjs/common'
+import { Body, Controller, Delete, Post, Res, UsePipes } from '@nestjs/common'
 import { Response } from 'express'
 import { ZodSerializerDto, ZodValidationPipe } from 'nestjs-zod'
+import { CookieAuthGuard, RefreshedUser } from '../shared/decorators'
 import { AuthCookieService } from './auth-cookie.service'
 import { AuthService } from './auth.service'
-import { RefreshedUser } from './decorators/refreshed-user.decorator'
 import { RefreshJwtClaimsDto, SignInRequestDto, SignInResponseDto } from './dto'
-import { RefreshAuthGuard } from './guards'
 
 @Controller('auth')
 export class AuthController {
@@ -35,7 +26,7 @@ export class AuthController {
   }
 
   @Post('refresh')
-  @UseGuards(RefreshAuthGuard)
+  @CookieAuthGuard()
   @ZodSerializerDto(SignInResponseDto)
   async refresh(
     @RefreshedUser() user: RefreshJwtClaimsDto,
@@ -48,7 +39,7 @@ export class AuthController {
   }
 
   @Delete('sign-out')
-  @UseGuards(RefreshAuthGuard)
+  @CookieAuthGuard()
   async signOut(
     @RefreshedUser() user: RefreshJwtClaimsDto,
     @Res({ passthrough: true }) response: Response

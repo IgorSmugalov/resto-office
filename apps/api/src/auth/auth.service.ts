@@ -27,9 +27,7 @@ export class AuthService {
     let user: User
     try {
       user = await this.userService.getUnique({ email })
-      await this.hashService.validatePassword(user.password, password, {
-        throwOnFail: true,
-      })
+      await this.validatePassword(user.password, password)
     } catch {
       throw new IncorrectCredentialsException()
     }
@@ -64,5 +62,10 @@ export class AuthService {
   private isCanAuth(user: User): boolean {
     if (!user.activated) throw new UserNotActivatedException()
     return true
+  }
+
+  private async validatePassword(hashedPass: string, pass: string) {
+    const isValid = await this.hashService.validatePassword(hashedPass, pass)
+    if (!isValid) throw new IncorrectCredentialsException()
   }
 }

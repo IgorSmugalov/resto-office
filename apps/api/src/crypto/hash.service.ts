@@ -1,6 +1,5 @@
 import { Injectable } from '@nestjs/common'
 import * as argon2 from 'argon2'
-import { IncorrectPasswordException } from './exceptions/password.exceptions'
 
 type validatePasswordOptions = { throwOnFail: boolean }
 const defaultOptions: validatePasswordOptions = { throwOnFail: false }
@@ -15,11 +14,8 @@ export class HashService {
 
   public async validatePassword(
     hashedPassword: string,
-    password: string,
-    options: validatePasswordOptions = defaultOptions
+    password: string
   ): Promise<boolean | never> {
-    const isValid = await argon2.verify(hashedPassword, password)
-    if (options.throwOnFail && !isValid) throw new IncorrectPasswordException()
-    return isValid
+    return await argon2.verify(hashedPassword, password)
   }
 }

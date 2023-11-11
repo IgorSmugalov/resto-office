@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common'
+import { forwardRef, Module } from '@nestjs/common'
 import { CryptoModule } from '../crypto'
 import { PrismaModule } from '../prisma'
 import { UserModule } from '../user'
@@ -16,7 +16,7 @@ import { RefreshJwtService } from './refresh-jwt.service'
     RefreshJwtService,
     AuthCookieService,
   ],
-  exports: [RefreshJwtService, AuthCookieService],
-  imports: [CryptoModule, UserModule, PrismaModule],
+  exports: [RefreshJwtService, AccessJwtService, AuthCookieService],
+  imports: [CryptoModule, forwardRef(() => UserModule), PrismaModule],
 })
 export class AuthModule {}
